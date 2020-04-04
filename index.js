@@ -145,9 +145,11 @@ io.on('connection', (socket) => {
     socket.on('round-ended', (gameKey, userSocketId) => {
         rooms.forEach(r => {
             if(r.key === gameKey) {
+                let winner = '';
                 r.users.forEach(u => {
                     if(u.socketId === userSocketId) {
                         u.score++;
+                        winner = u.nickname;
                     }
                     r.hasPicked = false;
                     r.pick = '';
@@ -158,8 +160,8 @@ io.on('connection', (socket) => {
                     r.czar = r.czar + 1;
                 r.currentBlackCard = getRandomBlackCard();
                 r.picks = [];
-                r.users.forEach(u => socket.to(u.socketId).emit('new-round', r));
-                socket.emit('new-round', r);
+                r.users.forEach(u => socket.to(u.socketId).emit('new-round', r, winner));
+                socket.emit('new-round', r, winner);
             }
         });
     });
