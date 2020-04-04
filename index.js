@@ -21,7 +21,7 @@ fs.readFile('./inc/blackCards.json', 'utf8', function(err, data) {
 function getRandomWhiteCards() {
     const randomCards = [];
     let i = 0;
-    while(i < 2) {
+    while(i < 10) {
         randomCards.push(whiteCards[parseInt(Math.random() * 471 - 1)]);
         i += 1;
     }
